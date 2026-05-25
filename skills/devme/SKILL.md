@@ -11,14 +11,14 @@ Route based on the requested action. If no action is given, default to diagnosti
 
 ---
 
-### If action is "setup" — generate devme.toml
+### If action is "setup": generate devme.toml
 
 Analyze the project in the current directory and generate a `devme.toml` config file.
 
 **Step 1: Detect project structure.** Look at:
-- `package.json` (Node/Bun — check scripts.dev for the dev command, check for drizzle/prisma)
+- `package.json` (Node/Bun, check scripts.dev for the dev command, check for drizzle/prisma)
 - `Cargo.toml` (Rust)
-- `pyproject.toml` / `requirements.txt` (Python — check for django, flask, fastapi)
+- `pyproject.toml` / `requirements.txt` (Python, check for django, flask, fastapi)
 - `go.mod` (Go)
 - `docker-compose.yml` / `compose.yml` (existing Docker services to model)
 - `Dockerfile` (containerized app)
@@ -30,7 +30,7 @@ Analyze the project in the current directory and generate a `devme.toml` config 
 ```toml
 schema_version = 1
 
-# Env vars — declare expected variables with defaults, choices, or generators.
+# Env vars. Declare expected variables with defaults, choices, or generators.
 # devme prompts for missing values on first run and writes them to .env.local.
 [env.DATABASE_URL]
 required = true
@@ -45,7 +45,7 @@ help = "Signing key. Auto-generated on first run."
 choices = ["us-east-1", "eu-west-1"]
 default = "eu-west-1"
 
-# Steps — prerequisites checked before services start.
+# Steps. Prerequisites checked before services start.
 # check: command that returns 0 on success.
 # provision: command to auto-fix when check fails.
 # trust = "auto": run provision without prompting.
@@ -61,7 +61,7 @@ trust = "auto"
 depends_on = ["bun"]
 description = "Install dependencies"
 
-# Services — long-running processes. Use {port} for slot-aware port allocation.
+# Services. Long-running processes. Use {port} for slot-aware port allocation.
 [service.postgres]
 cmd = "docker rm -f myapp-pg 2>/dev/null; docker run --rm --name myapp-pg -e POSTGRES_USER=dev -e POSTGRES_PASSWORD=dev -e POSTGRES_DB=mydb -p {port}:5432 postgres:17-alpine"
 port = { base = 5432, slot_offset = 10 }
@@ -89,9 +89,9 @@ depends_on = ["deps"]
 
 ---
 
-### If action is "doctor" or empty — diagnose and fix
+### If action is "doctor" or empty: diagnose and fix
 
-**Step 1:** Run `devme doctor --tail 30`. Parse the JSON — it has every service's state, pid, port, restart count, and recent log lines.
+**Step 1:** Run `devme doctor --tail 30`. Parse the JSON. It has every service's state, pid, port, restart count, and recent log lines.
 
 **Step 2:** Focus on `Failed` or `CrashLoop` services. Read their `logs` array for errors.
 
@@ -106,7 +106,7 @@ depends_on = ["deps"]
 
 ---
 
-### If action is "logs" — read service logs
+### If action is "logs": read service logs
 
 Run `devme logs <service> --tail 100` for the service the user asks about. If they don't specify, run `devme doctor --tail 20` to see all services and their recent output.
 
@@ -129,8 +129,8 @@ Run `devme logs <service> --tail 100` for the service the user asks about. If th
 
 ### Gotchas
 
-- `devme doctor` returns JSON — summarize for the user, don't dump raw.
+- `devme doctor` returns JSON. Summarize for the user, don't dump raw.
 - Services have dependency ordering. Restarting a database may cascade.
 - Step states (`Passed`/`Failed`) gate dependent services.
 - Docker `--name` containers need `docker rm -f` cleanup on restart.
-- If no daemon: `devme doctor` returns `status: "no_daemon"` — tell user to run `devme up -d`.
+- If no daemon: `devme doctor` returns `status: "no_daemon"`. Tell user to run `devme up -d`.

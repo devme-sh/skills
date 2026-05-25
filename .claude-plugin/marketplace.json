@@ -1,7 +1,7 @@
 {
   "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
   "name": "devme-plugins",
-  "description": "Claude Code plugins for devme — the executable README",
+  "description": "Claude Code plugins for devme",
   "owner": {
     "name": "devme-sh"
   },
@@ -12,10 +12,10 @@
     {
       "name": "devme",
       "source": "./plugins/devme",
-      "description": "Manage dev environments with devme — setup projects, diagnose failures, read logs, restart services, and auto-start Docker.",
+      "description": "Manage dev environments with devme. Setup projects, diagnose failures, read logs, and restart services.",
       "category": "development",
       "tags": ["devme", "dev-environment", "docker", "services", "supervisor", "diagnostics"],
-      "homepage": "https://github.com/devme-sh/claude-plugin"
+      "homepage": "https://devme.sh"
     }
   ]
 }

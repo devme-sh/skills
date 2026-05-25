@@ -3,8 +3,17 @@
 Claude Code plugin for [devme](https://github.com/devme-sh/devme).
 
 ```
+npx skills add devme-sh/claude-plugin
+```
+
+<details>
+<summary>Or install via Claude Code directly</summary>
+
+```
 claude plugin add devme-sh/claude-plugin
 ```
+
+</details>
 
 ## Commands
 

@@ -2,13 +2,19 @@
   "$schema": "https://anthropic.com/claude-code/plugin.schema.json",
   "name": "devme",
   "version": "0.1.0",
-  "description": "Manage dev environments with devme — setup projects, diagnose failures, read logs, restart services, and auto-start Docker.",
+  "description": "Manage dev environments with devme. Setup projects, diagnose failures, read logs, restart services, and auto-start Docker.",
   "author": {
     "name": "devme-sh",
     "url": "https://github.com/devme-sh"
   },
   "license": "MIT",
-  "homepage": "https://github.com/devme-sh/claude-plugin",
+  "homepage": "https://devme.sh",
   "repository": "https://github.com/devme-sh/claude-plugin",
-  "keywords": ["devme", "dev-environment", "docker", "services", "supervisor", "diagnostics", "setup"]
+  "keywords": ["devme", "dev-environment", "docker", "services", "supervisor", "diagnostics", "setup"],
+  "skills": [
+    {
+      "name": "devme",
+      "path": "../../../skills/devme"
+    }
+  ]
 }

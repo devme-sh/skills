@@ -1,26 +1,17 @@
-# devme Claude Code Plugin
+# devme skills
 
-Claude Code plugin for [devme](https://github.com/devme-sh/devme).
-
-```
-npx skills add devme-sh/claude-plugin
-```
-
-<details>
-<summary>Or install via Claude Code directly</summary>
+Agent skills for [devme](https://github.com/devme-sh/devme). Works with Claude Code, Cursor, Codex, and [50+ other agents](https://github.com/vercel-labs/skills).
 
 ```
-claude plugin add devme-sh/claude-plugin
+npx skills add devme-sh/skills
 ```
 
-</details>
-
-## Commands
+## What you get
 
 - `/devme setup` generates a `devme.toml` from your project (services, steps, env vars, dependency ordering)
 - `/devme doctor` runs diagnostics and fixes failing services
 - `/devme logs` reads service logs for debugging
-- Also auto-triggers when Claude detects services are down
+- Also auto-triggers when it detects services are down
 
 ## License
 

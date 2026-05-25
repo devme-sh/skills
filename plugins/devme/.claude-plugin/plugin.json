@@ -9,7 +9,7 @@
   },
   "license": "MIT",
   "homepage": "https://devme.sh",
-  "repository": "https://github.com/devme-sh/claude-plugin",
+  "repository": "https://github.com/devme-sh/skills",
   "keywords": ["devme", "dev-environment", "docker", "services", "supervisor", "diagnostics", "setup"],
   "skills": [
     {

@@ -1,27 +1,17 @@
 # devme Claude Code Plugin
 
-Claude Code plugin for [devme](https://github.com/devme-sh/devme) — the executable README for multi-service dev environments.
-
-## Install
+Claude Code plugin for [devme](https://github.com/devme-sh/devme).
 
 ```
 claude plugin add devme-sh/claude-plugin
 ```
 
-## What it does
+## Commands
 
-- **`/devme setup`** — Analyzes your project and generates a `devme.toml` config file with services, steps, env vars, and dependency ordering.
-- **`/devme doctor`** — Runs diagnostics, identifies failing services, and fixes issues automatically.
-- **`/devme logs`** — Reads service logs for debugging.
-- **Auto-triggered** — Claude detects when services are down or broken and invokes diagnostics without you asking.
-
-## Prerequisites
-
-Install devme:
-
-```bash
-cargo install --git https://github.com/devme-sh/devme
-```
+- `/devme setup` generates a `devme.toml` from your project (services, steps, env vars, dependency ordering)
+- `/devme doctor` runs diagnostics and fixes failing services
+- `/devme logs` reads service logs for debugging
+- Also auto-triggers when Claude detects services are down
 
 ## License
 

@@ -1,7 +1,9 @@
 ---
 name: devme
 description: Manage dev environments with devme. Use when services fail, won't start, crash-loop, show errors, databases are down, Docker isn't running, or user asks "what's wrong", "fix the environment", "check status", "restart", "logs", or mentions devme. Also use for `/devme setup` to generate a devme.toml for a new project.
-arguments: [action]
+license: MIT
+metadata:
+  version: "0.1.0"
 allowed-tools: Bash(devme *) Bash(docker *) Bash(lsof *) Bash(ps *) Bash(find *) Bash(cat *) Bash(ls *) Read Write
 ---
 
@@ -117,13 +119,16 @@ Run `devme logs <service> --tail 100` for the service the user asks about. If th
 | Command | Purpose |
 |---------|---------|
 | `devme doctor --tail N` | JSON diagnostic: states + last N log lines per service |
-| `devme status` | One-line-per-service status |
+| `devme status` | One-line-per-service status for this worktree, each with its resolved `:PORT` |
+| `devme status --all` | Every worktree of the repo with its slot and per-service ports (`*` marks the current one). Add `--json` for structured output |
 | `devme logs <svc> --tail N` | Last N lines of a service |
+| `devme url <svc>` | Print `http://localhost:<port>` for a service in this worktree. `-o` also opens it in the browser |
 | `devme restart <svc>` | Restart a service |
 | `devme start <svc>` | Start a stopped service |
 | `devme stop <svc>` | Stop a service |
 | `devme up -d` | Start everything detached |
 | `devme down` | Stop everything |
+| `devme worktree rm <target>` | Stop a worktree's stack, run its `[stack] on_destroy` hook, then `git worktree remove` it. Target by path, dir name, or branch; `-f` forces a dirty worktree |
 | `devme config` | Show global config |
 | `devme config set <key> <val>` | Set a config value |
 
@@ -134,3 +139,4 @@ Run `devme logs <service> --tail 100` for the service the user asks about. If th
 - Step states (`Passed`/`Failed`) gate dependent services.
 - Docker `--name` containers need `docker rm -f` cleanup on restart.
 - If no daemon: `devme doctor` returns `status: "no_daemon"`. Tell user to run `devme up -d`.
+- **Worktree-aware.** Each git worktree runs its own supervisor with its own slot and ports. `doctor`, `status`, `logs`, and `url` all act on the worktree you're in (the current directory) — an agent in a worktree just calls them and gets that worktree's data. Use `devme status --all` to see every worktree's slot and ports at once, and `devme url <svc>` to get a ready-to-hit `http://localhost:<port>` without guessing the slot offset.

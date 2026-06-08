@@ -131,6 +131,7 @@ Run `devme logs <service> --tail 100` for the service the user asks about. If th
 | `devme worktree rm <target>` | Stop a worktree's stack, run its `[stack] on_destroy` hook, then `git worktree remove` it. Target by path, dir name, or branch; `-f` forces a dirty worktree |
 | `devme config` | Show global config |
 | `devme config set <key> <val>` | Set a config value |
+| `devme skill install` | Install/refresh this very skill into `.claude/skills/devme/` (`-g` for `~/.claude/...`). It's embedded in the binary, so it always matches the installed devme version |
 
 ### Gotchas
 

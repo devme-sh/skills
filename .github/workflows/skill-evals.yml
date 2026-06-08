@@ -1,0 +1,60 @@
+name: Skill Evals
+
+# Behavioral evals for the devme skill. Runs on each devme release (via a
+# repository_dispatch fired by devme's release workflow) so the skill is
+# re-validated against the binary it ships alongside, plus on manual dispatch.
+on:
+  workflow_dispatch:
+    inputs:
+      devme_version:
+        description: "devme version tag (e.g. v0.1.4); blank = latest release"
+        required: false
+        default: ""
+  repository_dispatch:
+    types: [devme-release]
+
+jobs:
+  evals:
+    name: Run skill evals
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Resolve devme version
+        id: ver
+        run: |
+          v="${{ github.event.client_payload.version }}"
+          [ -z "$v" ] && v="${{ github.event.inputs.devme_version }}"
+          [ -z "$v" ] && v="latest"
+          echo "version=$v" >> "$GITHUB_OUTPUT"
+          echo "Resolving devme $v"
+
+      - name: Install devme
+        run: |
+          set -euo pipefail
+          v="${{ steps.ver.outputs.version }}"
+          asset="devme-x86_64-unknown-linux-gnu.tar.gz"
+          if [ "$v" = "latest" ]; then
+            url="$(curl -fsSL https://api.github.com/repos/devme-sh/devme/releases/latest \
+              | grep -o "https://[^\"]*${asset}" | head -1)"
+          else
+            url="https://github.com/devme-sh/devme/releases/download/${v}/${asset}"
+          fi
+          echo "Downloading $url"
+          curl -fsSL "$url" -o devme.tar.gz
+          mkdir -p "$HOME/.local/bin"
+          tar xzf devme.tar.gz -C "$HOME/.local/bin"
+          echo "$HOME/.local/bin" >> "$GITHUB_PATH"
+
+      - name: Verify devme
+        run: devme --version
+
+      - name: Install Claude Code (headless agent under test)
+        run: npm install -g @anthropic-ai/claude-code
+
+      - name: Run evals
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: bash evals/run.sh

@@ -1,0 +1,2 @@
+Set up devme for this project so I can run my dev environment through it.
+Generate a devme.toml.

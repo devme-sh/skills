@@ -1,0 +1,8 @@
+{
+  "name": "eval-setup-fixture",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "bun run server.ts"
+  }
+}
